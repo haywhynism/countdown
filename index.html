@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 </head>
 
-<body onload="" style="background-color: beige;">
+<body onload="getTimeFromLocal()" style="background-color: beige;">
 
     <div class="mx-auto" style="width: 300px !important;">
         <div class="mt-5">
@@ -52,10 +52,11 @@
         let min = 0;
         let sec = 0;
 
+        const alarmMusic = new Audio("./soundreality-alarm-471496.mp3")
+
         const countDown=()=>{
             if (document.getElementById("minute").value > 59  ){
                 alert("invalid number entered ");
-            
                 minute.value = ""
 
             } if (document.getElementById("second").value >59 ){
@@ -69,7 +70,9 @@
                 String(hou).padStart(2, '0') + ":" +
                 String(min).padStart(2, '0') + ":" +
                 String(sec).padStart(2, '0');
+             
         }
+
 
         function start() {
 
@@ -83,7 +86,8 @@
 
             timer = setInterval(() => {
                 if (hou === 0 && min === 0 && sec === 0) {
-                    return;
+                    alarmMusic.play();
+                    return; 
                 } 
 
                 sec--;
@@ -114,6 +118,13 @@
             localStorage.setItem("savedHr", hou);
             localStorage.setItem("savedMin", min);
             localStorage.setItem("savedSec", sec);
+        }
+
+        const getTimeFromLocal=()=>{
+            localStorage.getItem("savedHr", hou);
+            localStorage.getItem("savedMin", min);
+            localStorage.getItem("savedSec", sec);
+            updateDisplay();
         }
 
         function reset() {
